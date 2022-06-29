@@ -32,4 +32,16 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+datos = LOAD 'data.csv' USING PigStorage(',')
+    AS (
+            A: int,
+            B:chararray,
+            C:chararray,
+            D:chararray,
+            E:chararray,
+            F:chararray
+    );
 
+conjunt = FOREACH datos GENERATE C , UPPER(C) AS mayus, LOWER(C) AS minus;
+result = ORDER conjunt BY C, mayus, minus asc; 
+STORE result INTO 'output' USING PigStorage(',');
