@@ -15,9 +15,9 @@ $ pig -x local -f pregunta.pig
 data = LOAD 'data.tsv' USING PigStorage('\t')
     AS (
             A:chararray,
-            B:datetime,
+            B:chararray,
             C:int
     );
 
-ordered_data = ORDER data BY C asc;
-STORE srt INTO 'output' USING PigStorage(',');
+ordered_data = ORDER data BY A, C asc;
+STORE ordered_data INTO 'output' USING PigStorage(',');
