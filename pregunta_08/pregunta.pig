@@ -29,5 +29,3 @@ data = FOREACH data GENERATE TOTUPLE(A,K) as tupla;
 agrup = GROUP data BY tupla;
 wcount = FOREACH agrup GENERATE group, COUNT(data); 
 STORE wcount INTO 'output' USING PigStorage(',');
-
-DUMP wcount;
