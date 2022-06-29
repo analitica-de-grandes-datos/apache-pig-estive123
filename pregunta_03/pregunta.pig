@@ -20,5 +20,5 @@ datos = LOAD 'data.tsv' USING PigStorage('\t')
 
 resul = FOREACH datos GENERATE C;
 ordenada = ORDER resul By C asc;
-ordenada = LIMIT data_ordenada 5;
+ordenada = LIMIT ordenada 5;
 STORE ordenada INTO 'output' USING PigStorage(',');
