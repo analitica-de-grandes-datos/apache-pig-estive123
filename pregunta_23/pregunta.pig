@@ -1,3 +1,17 @@
+datos = LOAD 'data.csv' USING PigStorage(',') 
+    AS ( 
+            A: int, 
+            B:chararray, 
+            C:chararray, 
+            D:chararray, 
+            E:chararray, 
+            F:chararray 
+    ); 
+ 
+conjunt = FOREACH datos GENERATE B, E; 
+result = FILTER conjunt BY (E MATCHES '.*[aeiou]$.*'); 
+STORE result INTO 'output' USING PigStorage(',');
+
 /*
 Pregunta
 ===========================================================================
