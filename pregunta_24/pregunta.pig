@@ -1,16 +1,3 @@
-datos = LOAD 'data.csv' USING PigStorage(',') 
-    AS ( 
-            A: int, 
-            B:chararray, 
-            C:chararray, 
-            D:chararray, 
-            E:chararray, 
-            F:chararray 
-    ); 
- 
-result = FOREACH datos GENERATE REGEX_EXTRACT(D, '(.*)-(.*)-(.*)', 2); 
-STORE result INTO 'output' USING PigStorage(',');
-
 /*
 Pregunta
 ===========================================================================
@@ -30,7 +17,9 @@ evaluación, pig sera eejcutado ejecutado en modo local:
 $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
-/*
+*/
+
+
 datos = LOAD 'data.csv' USING PigStorage(',') 
     AS ( 
             A: int, 
