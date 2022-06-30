@@ -1,4 +1,16 @@
-/*
+datos = LOAD 'data.csv' USING PigStorage(',') 
+    AS ( 
+            A: int, 
+            B:chararray, 
+            C:chararray, 
+            D:chararray, 
+            E:chararray, 
+            F:chararray 
+    ); 
+ 
+conjunt = FOREACH datos GENERATE B;
+result = FILTER conjunt BY SUBSTRING(B, 0, 1) >= 'M'; 
+STORE result INTO 'output' USING PigStorage(',');/*
 Pregunta
 ===========================================================================
 
@@ -20,4 +32,3 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-

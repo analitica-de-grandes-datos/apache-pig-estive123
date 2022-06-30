@@ -34,3 +34,22 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+datos = LOAD 'data.csv' USING PigStorage(',')
+    AS (
+            A: int,
+            B:chararray,
+            C:chararray,
+            D:chararray,
+            E:chararray,
+            F:chararray
+    );
+
+columD = FOREACH datos GENERATE ToString(ToDate(D,'yyyy-MM-dd'),'yyyy-MM-dd'), ToString(ToDate(D,'yyyy-MM-dd'),'dd'), ToString(ToDate(D,'yyyy-MM-dd'),'d'), ToString( ToDate(D,'yyyy-MM-dd'), 'EEE' ), ToString( ToDate(D,'yyyy-MM-dd'), 'EEEEE' );
+result = Foreach columD generate $0, $1, $2, LOWER($3), LOWER($4) ;
+replace1 = FOREACH result GENERATE $0, $1, $2, REPLACE($3,'thu','jue'), REPLACE($4,'thursday','jueves');
+replace2 = FOREACH replace1 GENERATE $0, $1, $2, REPLACE($3,'sun','dom'), REPLACE($4,'sunday','domingo');
+replace3 = FOREACH replace2 GENERATE $0, $1, $2, REPLACE($3,'wed','mie'), REPLACE($4,'wednesday','miercoles');
+replace4 = FOREACH replace3 GENERATE $0, $1, $2, REPLACE($3,'mon','lun'), REPLACE($4,'monday','lunes');
+replace5 = FOREACH replace4 GENERATE $0, $1, $2, REPLACE($3,'fri','vie'), REPLACE($4,'friday','viernes');
+replace6 = FOREACH replace5 GENERATE $0, $1, $2, REPLACE($3,'tue','mar'), REPLACE($4,'tuesday','martes');
+STORE replace6 INTO 'output' USING PigStorage(',');
